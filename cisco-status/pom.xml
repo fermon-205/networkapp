@@ -103,6 +103,17 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/ncs-4.1.1.1.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
 	</dependencies>
 
 	<build>
