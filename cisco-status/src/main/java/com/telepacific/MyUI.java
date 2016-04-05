@@ -1,10 +1,22 @@
 package com.telepacific;
 
+import com.google.inject.Inject;
+
 import javax.servlet.annotation.WebServlet;
 
+import com.telepacific.api.Cisco;
+import com.telepacific.components.Application;
+import com.telepacific.components.Content;
+import com.telepacific.components.DeviceSelector;
+import com.telepacific.components.Header;
+import com.telepacific.components.InterfaceSelector;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.guice.annotation.Configuration;
+import com.vaadin.guice.annotation.GuiceUI;
+import com.vaadin.guice.annotation.ViewContainer;
+import com.vaadin.guice.server.GuiceVaadinServlet;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
@@ -19,30 +31,24 @@ import com.vaadin.ui.VerticalLayout;
  */
 @Theme("mytheme")
 @Widgetset("com.telepacific.MyAppWidgetset")
+@GuiceUI
 public class MyUI extends UI {
+
+    @Inject
+    private Application application;
+
+    @Inject
+    @ViewContainer
+    private Content content;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
-        
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
-
-        Button button = new Button("Click Me");
-        button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
-        });
-        
-        layout.addComponents(name, button);
-        layout.setMargin(true);
-        layout.setSpacing(true);
-        
-        setContent(layout);
+        setContent(application);
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
+    @Configuration(modules = {}, basePackages = "com.telepacific")
+    public static class MyUIServlet extends GuiceVaadinServlet {
     }
 }
