@@ -9,6 +9,6 @@ import com.vaadin.ui.Image;
 public class Logo extends Image {
 
     public Logo(){
-        super(null, new ThemeResource("img/tpac_logo.jpg"));
+        super(null, new ThemeResource("img/tpac_logo.png"));
     }
 }

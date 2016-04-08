@@ -27,6 +27,7 @@ public class InterfaceSelector extends NativeSelect{
             String selectedDevice = (String)event.getProperty().getValue();
 
             if(selectedDevice == null){
+                select(null);
                 setEnabled(false);
                 return;
             }

@@ -15,6 +15,6 @@ public class Header extends HorizontalLayout {
         setComponentAlignment(selectorsLayout, Alignment.TOP_LEFT);
         setComponentAlignment(logo, Alignment.TOP_RIGHT);
         setWidth("100%");
-        setHeight("65px");
+        setHeight("56px");
     }
 }

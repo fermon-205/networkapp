@@ -3,6 +3,8 @@ package com.telepacific.api;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Singleton;
 
+import com.tailf.ncs.NcsMain;
+import com.tailf.ncs.ns.Ncs;
 import com.telepacific.domain.JMXAddress;
 
 import java.util.List;
@@ -10,6 +12,10 @@ import java.util.Map;
 
 @Singleton
 public class Cisco {
+
+    public Cisco(){
+        NcsMain ncsMain = NcsMain.getInstance();
+    }
 
     public List<String> availableDevices(){
 
