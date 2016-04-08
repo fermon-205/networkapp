@@ -10,18 +10,11 @@ import com.vaadin.ui.HorizontalLayout;
 public class Header extends HorizontalLayout {
 
     @Inject
-    public Header(DeviceSelector deviceSelector, InterfaceSelector interfaceSelector, Logo logo){
-        setMargin(true);
-
-        HorizontalLayout selectorLayout = new HorizontalLayout();
-        selectorLayout.setSpacing(true);
-        selectorLayout.addComponents(deviceSelector, interfaceSelector);
-        selectorLayout.setComponentAlignment(deviceSelector, Alignment.TOP_LEFT);
-        selectorLayout.setComponentAlignment(interfaceSelector, Alignment.TOP_LEFT);
-
-        addComponents(selectorLayout, logo);
-        setComponentAlignment(selectorLayout, Alignment.TOP_LEFT);
+    public Header(SelectorsLayout selectorsLayout, Logo logo){
+        addComponents(selectorsLayout, logo);
+        setComponentAlignment(selectorsLayout, Alignment.TOP_LEFT);
         setComponentAlignment(logo, Alignment.TOP_RIGHT);
         setWidth("100%");
+        setHeight("65px");
     }
 }

@@ -11,11 +11,8 @@ import com.vaadin.ui.Panel;
 @GuiceView(name = "jmx-addresses-view")
 public class JMXAddressesView extends Panel implements View {
 
-    private JMXAddressesGrid jmxAddressesGrid;
-
     @Inject
     public JMXAddressesView(JMXAddressesGrid jmxAddressesGrid){
-        this.jmxAddressesGrid = jmxAddressesGrid;
         setContent(jmxAddressesGrid);
         setSizeFull();
     }

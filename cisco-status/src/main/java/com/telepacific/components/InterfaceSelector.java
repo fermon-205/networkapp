@@ -19,6 +19,9 @@ public class InterfaceSelector extends NativeSelect{
     @Inject
     public InterfaceSelector(Cisco cisco, DeviceSelector deviceSelector, JMXAddressesGrid jmxAddressesGrid){
         setEnabled(false);
+        setNullSelectionAllowed(true);
+        setNullSelectionItemId("Select interface here..");
+
 
         deviceSelector.addValueChangeListener((ValueChangeListener) event -> {
             String selectedDevice = (String)event.getProperty().getValue();
@@ -33,32 +36,33 @@ public class InterfaceSelector extends NativeSelect{
             setEnabled(true);
         });
 
-        addValueChangeListener(new ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                String selectedDevice = (String)deviceSelector.getValue();
+        addValueChangeListener((ValueChangeListener) event -> {
+            String selectedDevice = (String)deviceSelector.getValue();
 
-                if(selectedDevice == null){
-                    return;
-                }
+            if(selectedDevice == null){
+                return;
+            }
 
-                String selectedInterface = (String)event.getProperty().getValue();
+            String selectedInterface = (String)event.getProperty().getValue();
 
-                switch (selectedInterface) {
-                    case "jmx-addresses": {
-                        final List<JMXAddress> jmxAddresses = cisco.getJMXAddresses(selectedDevice);
+            if(selectedInterface == null){
+                return;
+            }
 
-                        BeanItemContainer<JMXAddress> beanItemContainer = new BeanItemContainer<>(JMXAddress.class);
+            switch (selectedInterface) {
+                case "jmx-addresses": {
+                    final List<JMXAddress> jmxAddresses = cisco.getJMXAddresses(selectedDevice);
 
-                        for (JMXAddress jmxAddress : jmxAddresses) {
-                            beanItemContainer.addBean(jmxAddress);
-                        }
+                    BeanItemContainer<JMXAddress> beanItemContainer = new BeanItemContainer<>(JMXAddress.class);
 
-                        jmxAddressesGrid.setContainerDataSource(beanItemContainer);
-
-                        UI.getCurrent().getNavigator().navigateTo("jmx-addresses-view");
-                        break;
+                    for (JMXAddress jmxAddress : jmxAddresses) {
+                        beanItemContainer.addBean(jmxAddress);
                     }
+
+                    jmxAddressesGrid.setContainerDataSource(beanItemContainer);
+
+                    UI.getCurrent().getNavigator().navigateTo("jmx-addresses-view");
+                    break;
                 }
             }
         });

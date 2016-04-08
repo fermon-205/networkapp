@@ -34,5 +34,8 @@
 @mixin mytheme {
   @include valo;
 
+  .lftmrgn{
+    margin-left:10px;
+  }
   // Insert your own theme rules here
 }
