@@ -9,7 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 public class Application extends VerticalLayout {
 
     @Inject
-    public Application(Header header, Content content){
+    public Application(Header header, Content content) {
         addComponents(header, content);
         setExpandRatio(content, 1);
         setSizeFull();

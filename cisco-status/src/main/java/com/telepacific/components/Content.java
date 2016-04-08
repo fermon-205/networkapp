@@ -6,7 +6,7 @@ import com.vaadin.ui.Panel;
 @UIScope
 public class Content extends Panel {
 
-    public Content(){
+    public Content() {
         setSizeFull();
     }
 }

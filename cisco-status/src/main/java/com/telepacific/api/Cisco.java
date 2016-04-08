@@ -4,25 +4,23 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Singleton;
 
 import com.tailf.ncs.NcsMain;
-import com.tailf.ncs.ns.Ncs;
 import com.telepacific.domain.JMXAddress;
 
 import java.util.List;
-import java.util.Map;
 
 @Singleton
 public class Cisco {
 
-    public Cisco(){
+    public Cisco() {
         NcsMain ncsMain = NcsMain.getInstance();
     }
 
-    public List<String> availableDevices(){
+    public List<String> availableDevices() {
 
         return ImmutableList.of("device1", "device2");
     }
 
-    public List<String> availableInterfaces(String device){
+    public List<String> availableInterfaces(String device) {
         return ImmutableList.of("jmx-addresses");
     }
 

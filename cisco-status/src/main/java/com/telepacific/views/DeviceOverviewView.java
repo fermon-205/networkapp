@@ -5,10 +5,10 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Label;
 
-@GuiceView(name="")
+@GuiceView(name = "")
 public class DeviceOverviewView extends Label implements View {
 
-    public DeviceOverviewView(){
+    public DeviceOverviewView() {
         super("device overview goes here");
     }
 

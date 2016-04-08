@@ -7,10 +7,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 
 @UIScope
-public class SelectorsLayout extends HorizontalLayout{
+public class SelectorsLayout extends HorizontalLayout {
 
     @Inject
-    SelectorsLayout(DeviceSelector deviceSelector, InterfaceSelector interfaceSelector){
+    SelectorsLayout(DeviceSelector deviceSelector, InterfaceSelector interfaceSelector) {
         setSpacing(true);
         setHeight("65px");
         addStyleName("lftmrgn");

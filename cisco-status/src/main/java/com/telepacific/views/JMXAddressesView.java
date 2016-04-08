@@ -12,7 +12,7 @@ import com.vaadin.ui.Panel;
 public class JMXAddressesView extends Panel implements View {
 
     @Inject
-    public JMXAddressesView(JMXAddressesGrid jmxAddressesGrid){
+    public JMXAddressesView(JMXAddressesGrid jmxAddressesGrid) {
         setContent(jmxAddressesGrid);
         setSizeFull();
     }

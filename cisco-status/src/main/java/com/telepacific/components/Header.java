@@ -10,7 +10,7 @@ import com.vaadin.ui.HorizontalLayout;
 public class Header extends HorizontalLayout {
 
     @Inject
-    public Header(SelectorsLayout selectorsLayout, Logo logo){
+    public Header(SelectorsLayout selectorsLayout, Logo logo) {
         addComponents(selectorsLayout, logo);
         setComponentAlignment(selectorsLayout, Alignment.TOP_LEFT);
         setComponentAlignment(logo, Alignment.TOP_RIGHT);

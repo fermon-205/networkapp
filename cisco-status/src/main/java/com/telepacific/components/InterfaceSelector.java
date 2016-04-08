@@ -4,29 +4,27 @@ import com.google.inject.Inject;
 
 import com.telepacific.api.Cisco;
 import com.telepacific.domain.JMXAddress;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.guice.annotation.UIScope;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
 
 import java.util.List;
 
 @UIScope
-public class InterfaceSelector extends NativeSelect{
+public class InterfaceSelector extends NativeSelect {
 
     @Inject
-    public InterfaceSelector(Cisco cisco, DeviceSelector deviceSelector, JMXAddressesGrid jmxAddressesGrid){
+    public InterfaceSelector(Cisco cisco, DeviceSelector deviceSelector, JMXAddressesGrid jmxAddressesGrid) {
         setEnabled(false);
         setNullSelectionAllowed(true);
         setNullSelectionItemId("Select interface here..");
 
 
         deviceSelector.addValueChangeListener((ValueChangeListener) event -> {
-            String selectedDevice = (String)event.getProperty().getValue();
+            String selectedDevice = (String) event.getProperty().getValue();
 
-            if(selectedDevice == null){
+            if (selectedDevice == null) {
                 select(null);
                 setEnabled(false);
                 return;
@@ -38,15 +36,15 @@ public class InterfaceSelector extends NativeSelect{
         });
 
         addValueChangeListener((ValueChangeListener) event -> {
-            String selectedDevice = (String)deviceSelector.getValue();
+            String selectedDevice = (String) deviceSelector.getValue();
 
-            if(selectedDevice == null){
+            if (selectedDevice == null) {
                 return;
             }
 
-            String selectedInterface = (String)event.getProperty().getValue();
+            String selectedInterface = (String) event.getProperty().getValue();
 
-            if(selectedInterface == null){
+            if (selectedInterface == null) {
                 return;
             }
 
