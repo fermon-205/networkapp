@@ -59,7 +59,6 @@ public class InterfaceSelector extends NativeSelect {
                     }
 
                     jmxAddressesGrid.setContainerDataSource(beanItemContainer);
-
                     UI.getCurrent().getNavigator().navigateTo("jmx-addresses-view");
                     break;
                 }
