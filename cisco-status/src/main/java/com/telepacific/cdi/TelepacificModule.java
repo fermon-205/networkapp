@@ -9,6 +9,7 @@ import com.tailf.conf.Conf;
 import com.tailf.conf.ConfBuf;
 import com.tailf.conf.ConfException;
 import com.tailf.conf.ConfIPv4;
+import com.tailf.conf.ConfValue;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -27,7 +28,12 @@ public class TelepacificModule extends AbstractModule {
 
             System.err.println("reading out servers");
 
-            for(int i = 0; i < session.numInstances("/servers/server"); i++) {
+            final ConfValue elem = session.getElem("/");
+
+            System.err.println("elem class is " + elem.getClass().getName());
+
+            for(int i = 0; i < session.getNumberOfInstances("/servers/server"); i++) {
+
                 ConfBuf name =
                         (ConfBuf) session.getElem("/servers/server[%d]/hostname", i);
                 ConfIPv4 ip =
