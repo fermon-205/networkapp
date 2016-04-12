@@ -29,17 +29,15 @@ public class TelepacificModule extends AbstractModule {
             System.err.println("reading out servers");
 
             //final ConfValue elem = session.getElem("/");
+//servers/server
+            //
 
-            //System.err.println("elem class is " + elem.getClass().getName());
+            for(int i = 0; i < session.getNumberOfInstances("/"); i++) {
 
-            for(int i = 0; i < session.getNumberOfInstances("/servers/server"); i++) {
+                final ConfValue elem = session.getElem("/[%d]", i);
 
-                ConfBuf name =
-                        (ConfBuf) session.getElem("/servers/server[%d]/hostname", i);
-                ConfIPv4 ip =
-                        (ConfIPv4) session.getElem("/servers/server[%d]/ip", i);
-
-                System.err.println("found server " + name + " with ip " + ip);
+                System.err.println("elem class is " + elem.getClass().getName());
+                //System.err.println("found server " + name + " with ip " + ip);
             }
 
             bind(Cdb.class).toInstance(cdb);
