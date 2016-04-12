@@ -219,6 +219,10 @@
 				<version>${jetty.plugin.version}</version>
 				<configuration>
 				    <scanIntervalSeconds>2</scanIntervalSeconds>
+					<httpConnector>
+						<!--host>localhost</host-->
+						<port>9999</port>
+					</httpConnector>
 				</configuration>
 			</plugin>
 		</plugins>
