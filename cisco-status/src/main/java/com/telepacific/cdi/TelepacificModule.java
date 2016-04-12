@@ -28,9 +28,9 @@ public class TelepacificModule extends AbstractModule {
 
             System.err.println("reading out servers");
 
-            final ConfValue elem = session.getElem("/");
+            //final ConfValue elem = session.getElem("/");
 
-            System.err.println("elem class is " + elem.getClass().getName());
+            //System.err.println("elem class is " + elem.getClass().getName());
 
             for(int i = 0; i < session.getNumberOfInstances("/servers/server"); i++) {
 
