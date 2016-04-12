@@ -28,6 +28,8 @@ public class TelepacificModule extends AbstractModule {
 
             System.err.println("reading out servers");
 
+            System.err.println(session.exists("/"));
+
             //final ConfValue elem = session.getElem("/");
 //servers/server
             //
