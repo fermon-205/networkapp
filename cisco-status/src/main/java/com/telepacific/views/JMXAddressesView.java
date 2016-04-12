@@ -2,6 +2,7 @@ package com.telepacific.views;
 
 import com.google.inject.Inject;
 
+import com.tailf.cdb.Cdb;
 import com.telepacific.components.DeviceSelector;
 import com.telepacific.components.JMXAddressesGrid;
 import com.vaadin.guice.annotation.GuiceView;
@@ -12,6 +13,9 @@ import com.vaadin.ui.VerticalLayout;
 
 @GuiceView(name = "jmx-addresses-view")
 public class JMXAddressesView extends VerticalLayout implements View {
+
+    @Inject
+    Cdb cdb;
 
     private final DeviceSelector deviceSelector;
 
@@ -29,5 +33,7 @@ public class JMXAddressesView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         topLabel.setValue("jmx-addresses for " + deviceSelector.getValue());
+
+
     }
 }
