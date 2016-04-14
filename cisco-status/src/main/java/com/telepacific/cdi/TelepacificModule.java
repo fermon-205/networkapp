@@ -26,20 +26,11 @@ public class TelepacificModule extends AbstractModule {
 
             CdbSession session = cdb.startSession(CdbDBType.CDB_RUNNING);
 
-            System.err.println("reading out servers");
+            System.err.println(session.getNumberOfInstances("/services/vlan"));
 
-            System.err.println(session.exists("/"));
-
-            //final ConfValue elem = session.getElem("/");
-//servers/server
-            //
-
-            for(int i = 0; i < session.getNumberOfInstances("/"); i++) {
-
-                final ConfValue elem = session.getElem("/[%d]", i);
-
-                System.err.println("elem class is " + elem.getClass().getName());
-                //System.err.println("found server " + name + " with ip " + ip);
+            for(int i = 0; i < session.numInstances("/servers/server"); i++) {
+                ConfBuf name = (ConfBuf) session.getElem("/servers/server[%d]/hostname", i);
+                ConfIPv4 ip =  (ConfIPv4) session.getElem("/servers/server[%d]/ip", i);
             }
 
             bind(Cdb.class).toInstance(cdb);
