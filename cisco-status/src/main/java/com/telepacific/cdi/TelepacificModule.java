@@ -26,11 +26,16 @@ public class TelepacificModule extends AbstractModule {
 
             CdbSession session = cdb.startSession(CdbDBType.CDB_RUNNING);
 
-            for(int i = 0; i < session.numInstances("/servers/server"); i++) {
-                ConfBuf name = (ConfBuf) session.getElem("/servers/server[%d]/hostname", i);
-                ConfIPv4 ip =  (ConfIPv4) session.getElem("/servers/server[%d]/ip", i);
-            }
+            int numDev = session.numInstances("/devices/device");
 
+            System.err.println("num devices = " + numDev);
+
+            /*
+            for(int i = 0; i < numDev; i++) {
+                ConfBuf name = (ConfBuf) session.getElem("/devices/device[%d]/hostname", i);
+                ConfIPv4 ip =  (ConfIPv4) session.getElem("/devices/device[%d]/ip", i);
+            }
+*/
             bind(Cdb.class).toInstance(cdb);
         } catch (IOException | ConfException e) {
             throw new RuntimeException(e);
