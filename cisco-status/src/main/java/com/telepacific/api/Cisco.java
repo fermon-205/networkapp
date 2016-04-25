@@ -18,13 +18,14 @@ import java.util.List;
 @Singleton
 public class Cisco {
 
-    @Inject
-    private Cdb cdb;
+    //@Inject
+    //private Cdb cdb;
 
     public Cisco() {
     }
 
     public List<String> availableDevices() {
+        /*
         try {
             final CdbSession cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
 
@@ -42,6 +43,9 @@ public class Cisco {
         } catch (ConfException | IOException e) {
             throw new RuntimeException(e);
         }
+        */
+
+        return ImmutableList.of("device1", "device2");
     }
 
     public List<String> availableInterfaces(String device) {

@@ -14,8 +14,8 @@ import com.vaadin.ui.VerticalLayout;
 @GuiceView(name = "jmx-addresses-view")
 public class JMXAddressesView extends VerticalLayout implements View {
 
-    @Inject
-    Cdb cdb;
+    //@Inject
+    //Cdb cdb;
 
     private final DeviceSelector deviceSelector;
 
