@@ -25,29 +25,14 @@ public class TelepacificModule extends AbstractModule {
         install(new JpaPersistModule("cisco_status"));
         bind(PersistServiceInitializer.class).asEagerSingleton();
 
-        /*
         try {
             Socket socket = new Socket("localhost", Conf.NCS_PORT);
 
             Cdb cdb = new Cdb("my_cdb", socket);
 
-            System.err.println("opening cdb session");
-
-            CdbSession session = cdb.startSession(CdbDBType.CDB_RUNNING);
-
-            int numDev = session.numInstances("/devices/device");
-
-            System.err.println("num devices = " + numDev);
-
-            for(int i = 0; i < numDev; i++) {
-                ConfBuf name = (ConfBuf) session.getElem("/devices/device[%d]/hostname", i);
-                ConfIPv4 ip =  (ConfIPv4) session.getElem("/devices/device[%d]/ip", i);
-            }
-
             bind(Cdb.class).toInstance(cdb);
         } catch (IOException | ConfException e) {
             throw new RuntimeException(e);
         }
-        */
     }
 }
