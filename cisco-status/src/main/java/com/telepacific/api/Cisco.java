@@ -18,8 +18,8 @@ import java.util.List;
 @Singleton
 public class Cisco {
 
-    //@Inject
-    //private Cdb cdb;
+    @Inject
+    private Cdb cdb;
 
     public Cisco() {
     }
@@ -43,8 +43,7 @@ public class Cisco {
         } catch (ConfException | IOException e) {
             throw new RuntimeException(e);
         }
-        */
-
+*/
         return ImmutableList.of("device1", "device2");
     }
 
