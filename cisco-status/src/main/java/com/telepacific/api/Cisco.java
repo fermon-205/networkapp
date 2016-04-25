@@ -25,16 +25,16 @@ public class Cisco {
     }
 
     public List<String> availableDevices() {
-        /*
+
         try {
             final CdbSession cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
 
-            final int numberOfInstances = cdbSession.getNumberOfInstances("/servers/server");
+            final int numberOfInstances = cdbSession.getNumberOfInstances("/devices/device");
 
             List<String> availableDevices = new ArrayList<>(numberOfInstances);
 
             for(int i = 0; i < numberOfInstances; i++){
-                ConfBuf name = (ConfBuf) cdbSession.getElem("/servers/server[%d]/hostname", i);
+                ConfBuf name = (ConfBuf) cdbSession.getElem("/devices/device[%d]/name", i);
 
                 availableDevices.add(name.toString());
             }
@@ -43,8 +43,6 @@ public class Cisco {
         } catch (ConfException | IOException e) {
             throw new RuntimeException(e);
         }
-*/
-        return ImmutableList.of("device1", "device2");
     }
 
     public List<String> availableInterfaces(String device) {
