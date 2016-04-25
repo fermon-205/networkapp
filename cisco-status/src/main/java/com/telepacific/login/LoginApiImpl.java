@@ -2,6 +2,7 @@ package com.telepacific.login;
 
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import com.telepacific.api.LoginApi;
@@ -12,19 +13,31 @@ import com.telepacific.domain.User;
 import com.vaadin.guice.annotation.UIScope;
 import com.vaadin.server.VaadinSession;
 
+import javax.persistence.EntityManager;
+
 @UIScope
 public class LoginApiImpl implements LoginApi {
 
     @Inject
     private UIEventBus uiEventBus;
 
+    @Inject
+    private Provider<EntityManager> entityManagerProvider;
+
     @Override
     public boolean login(String userName, String password) {
-        if(!"user".equals(userName) || !"secret".equals(password)){
+
+        final EntityManager entityManager = entityManagerProvider.get();
+
+        final User user = entityManager.find(User.class, userName);
+
+        if(user == null){
             return false;
         }
 
-        User user = new User(userName, password);
+        if(!password.equals(user.getPassword())){
+            return false;
+        }
 
         VaadinSession.getCurrent().setAttribute(User.class, user);
 

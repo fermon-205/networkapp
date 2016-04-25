@@ -1,6 +1,7 @@
 package com.telepacific.cdi;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.persist.jpa.JpaPersistModule;
 
 import com.tailf.cdb.Cdb;
 import com.tailf.cdb.CdbDBType;
@@ -20,6 +21,9 @@ public class TelepacificModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(LoginApi.class).to(LoginApiImpl.class);
+
+        install(new JpaPersistModule("cisco_status"));
+        bind(PersistServiceInitializer.class).asEagerSingleton();
 
         /*
         try {
