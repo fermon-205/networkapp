@@ -14,7 +14,7 @@ public class HeaderLeft extends VerticalLayout {
         addComponents(loginStatus, selectorsLayout);
         setComponentAlignment(loginStatus, Alignment.MIDDLE_LEFT);
         setComponentAlignment(selectorsLayout, Alignment.TOP_LEFT);
-        setExpandRatio(selectorsLayout,1);
+        //setExpandRatio(selectorsLayout,1);
         setHeight("56px");
         addStyleName("lftmrgn");
     }

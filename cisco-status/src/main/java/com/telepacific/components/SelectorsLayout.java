@@ -14,5 +14,6 @@ public class SelectorsLayout extends HorizontalLayout {
         addComponents(deviceSelector, interfaceSelector);
         setComponentAlignment(deviceSelector, Alignment.MIDDLE_LEFT);
         setComponentAlignment(interfaceSelector, Alignment.MIDDLE_LEFT);
+        setSpacing(true);
     }
 }
