@@ -2,6 +2,8 @@ package com.telepacific.login;
 
 import com.google.inject.Inject;
 
+import com.ejt.vaadin.loginform.*;
+import com.ejt.vaadin.loginform.LoginForm;
 import com.telepacific.api.LoginApi;
 import com.telepacific.bus.UIEventBus;
 import com.vaadin.guice.annotation.UIScope;
@@ -16,14 +18,15 @@ public class LoginWindow extends Window{
     @Inject
     LoginWindow(final LoginApi loginApi){
 
-        final LoginForm loginForm = new LoginForm();
+        final DefaultVerticalLoginForm loginForm = new DefaultVerticalLoginForm();
 
         loginForm.setStyleName("login-form");
 
         loginForm.addLoginListener(new LoginForm.LoginListener() {
             @Override
             public void onLogin(LoginForm.LoginEvent event) {
-                if(loginApi.login(event.getLoginParameter("username"), event.getLoginParameter("password"))){
+
+                if(loginApi.login(event.getUserName(), event.getPassword())){
                     close();
                 } else {
                     Notification.show("wrong username/password");
