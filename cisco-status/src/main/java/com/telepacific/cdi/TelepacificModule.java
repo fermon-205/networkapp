@@ -9,30 +9,62 @@ import com.tailf.cdb.CdbSession;
 import com.tailf.conf.Conf;
 import com.tailf.conf.ConfBuf;
 import com.tailf.conf.ConfException;
-import com.tailf.conf.ConfIPv4;
-import com.tailf.conf.ConfValue;
 import com.telepacific.api.LoginApi;
 import com.telepacific.login.LoginApiImpl;
 
 import java.io.IOException;
 import java.net.Socket;
 
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.System.getProperty;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class TelepacificModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(LoginApi.class).to(LoginApiImpl.class);
 
-        install(new JpaPersistModule("cisco_status"));
-        bind(PersistServiceInitializer.class).asEagerSingleton();
+        boolean localDevelopment = parseBoolean(getProperty("local_dev"));
 
-        try {
-            Socket socket = new Socket("localhost", Conf.NCS_PORT);
+        if(localDevelopment){
+            install(new JpaPersistModule("cisco_status_dev"));
 
-            Cdb cdb = new Cdb("my_cdb", socket);
+            try {
+                Cdb cdb = mock(Cdb.class);
 
-            bind(Cdb.class).toInstance(cdb);
-        } catch (IOException | ConfException e) {
-            throw new RuntimeException(e);
+                CdbSession cdbSession = mock(CdbSession.class);
+
+                ConfBuf confValue = mock(ConfBuf.class);
+
+                when(confValue.toString()).thenReturn("mock conf value");
+
+                when(cdb.startSession(CdbDBType.CDB_RUNNING)).thenReturn(cdbSession);
+
+                when(cdbSession.getNumberOfInstances("/devices/device")).thenReturn(3);
+
+                when(cdbSession.getElem(anyString(),anyInt())).thenReturn(confValue);
+
+                bind(Cdb.class).toInstance(cdb);
+            } catch (ConfException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            install(new JpaPersistModule("cisco_status_prod"));
+
+            try {
+                Socket socket = new Socket("localhost", Conf.NCS_PORT);
+
+                Cdb cdb = new Cdb("my_cdb", socket);
+
+                bind(Cdb.class).toInstance(cdb);
+            } catch (IOException | ConfException e) {
+                throw new RuntimeException(e);
+            }
         }
+
+        bind(PersistServiceInitializer.class).asEagerSingleton();
     }
 }
