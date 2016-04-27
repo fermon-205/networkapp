@@ -9,7 +9,9 @@ import com.tailf.cdb.CdbDBType;
 import com.tailf.cdb.CdbSession;
 import com.tailf.conf.ConfBuf;
 import com.tailf.conf.ConfException;
+import com.tailf.conf.ConfValue;
 import com.telepacific.domain.JMXAddress;
+import com.telepacific.domain.VLan;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +45,29 @@ public class Cisco {
         } catch (ConfException | IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<VLan> getAllKnownVLans() throws ConfException, IOException {
+        List<VLan> vlans = new ArrayList<>();
+
+        final CdbSession cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
+
+        int numberOfInstances = cdbSession.getNumberOfInstances("/devices/device");
+
+        for(int i = 0; i < numberOfInstances; i++){
+            int numberOfVlans = cdbSession.getNumberOfInstances("/devices/device[%d]/config/ios:interface/Vlan",i);
+
+            for(int j = 0; j < numberOfVlans; j++){
+                ConfValue name =cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/name",i,j);
+                ConfValue address = cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/ip/address/primary/address",i,j);
+
+                VLan vLan = new VLan(name.toString(), address.toString());
+
+                vlans.add(vLan);
+            }
+        }
+
+        return vlans;
     }
 
     public List<String> availableInterfaces(String device) {

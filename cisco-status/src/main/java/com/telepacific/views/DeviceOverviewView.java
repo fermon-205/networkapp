@@ -1,15 +1,29 @@
 package com.telepacific.views;
 
+import com.google.inject.Inject;
+
+import com.telepacific.data.VLanContainer;
 import com.vaadin.guice.annotation.GuiceView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 
 @GuiceView(name = "")
-public class DeviceOverviewView extends Label implements View {
+public class DeviceOverviewView extends VerticalLayout implements View {
 
-    public DeviceOverviewView() {
-        super("device overview goes here");
+    @Inject
+    public DeviceOverviewView(VLanContainer container) {
+
+        Label label = new Label("all available VLans");
+
+        Grid grid = new Grid(container);
+
+        addComponents(grid, label);
+
+        setSpacing(true);
     }
 
     @Override
