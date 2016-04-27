@@ -26,10 +26,13 @@ public class Cisco {
     public Cisco() {
     }
 
+
     public List<String> availableDevices() {
 
+        CdbSession cdbSession = null;
+
         try {
-            final CdbSession cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
+            cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
 
             final int numberOfInstances = cdbSession.getNumberOfInstances("/devices/device");
 
@@ -41,33 +44,51 @@ public class Cisco {
                 availableDevices.add(name.toString());
             }
 
+            cdbSession.endSession();
+
             return availableDevices;
         } catch (ConfException | IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            if(cdbSession != null){
+                try {
+                    cdbSession.endSession();
+                } catch (ConfException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
     public List<VLan> getAllKnownVLans() throws ConfException, IOException {
         List<VLan> vlans = new ArrayList<>();
 
-        final CdbSession cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
+        CdbSession cdbSession = null;
 
-        int numberOfInstances = cdbSession.getNumberOfInstances("/devices/device");
+        try{
+            cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
 
-        for(int i = 0; i < numberOfInstances; i++){
-            int numberOfVlans = cdbSession.getNumberOfInstances("/devices/device[%d]/config/ios:interface/Vlan",i);
+            int numberOfInstances = cdbSession.getNumberOfInstances("/devices/device");
 
-            for(int j = 0; j < numberOfVlans; j++){
-                ConfValue name =cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/name",i,j);
-                ConfValue address = cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/ip/address/primary/address",i,j);
+            for(int i = 0; i < numberOfInstances; i++){
+                int numberOfVlans = cdbSession.getNumberOfInstances("/devices/device[%d]/config/ios:interface/Vlan",i);
 
-                VLan vLan = new VLan(name.toString(), address.toString());
+                for(int j = 0; j < numberOfVlans; j++){
+                    ConfValue name =cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/name",i,j);
+                    ConfValue address = cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/ip/address/primary/address",i,j);
 
-                vlans.add(vLan);
+                    VLan vLan = new VLan(name.toString(), address.toString());
+
+                    vlans.add(vLan);
+                }
+            }
+
+            return vlans;
+        } finally {
+            if(cdbSession != null){
+                cdbSession.endSession();
             }
         }
-
-        return vlans;
     }
 
     public List<String> availableInterfaces(String device) {
