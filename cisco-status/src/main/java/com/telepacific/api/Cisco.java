@@ -16,6 +16,7 @@ import com.telepacific.domain.VLan;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Singleton
 public class Cisco {
@@ -74,10 +75,14 @@ public class Cisco {
                 int numberOfVlans = cdbSession.getNumberOfInstances("/devices/device[%d]/config/ios:interface/Vlan",i);
 
                 for(int j = 0; j < numberOfVlans; j++){
-                    ConfValue name =cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/name",i,j);
-                    ConfValue address = cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/ip/address/primary/address",i,j);
+                    ConfValue nameConfValue = cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/name",i,j);
+                    ConfValue addressConfValue = cdbSession.getElem("/devices/device[%d]/config/ios:interface/Vlan[%d]/ip/address/primary/address",i,j);
 
-                    VLan vLan = new VLan(name.toString(), address.toString());
+                    final String nameString = Objects.toString(nameConfValue, "unknown");
+
+                    final String addressString = Objects.toString(addressConfValue, "unknown");
+
+                    VLan vLan = new VLan(nameString, addressString);
 
                     vlans.add(vLan);
                 }
