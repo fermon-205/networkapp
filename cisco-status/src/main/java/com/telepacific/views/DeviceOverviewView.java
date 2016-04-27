@@ -21,7 +21,11 @@ public class DeviceOverviewView extends VerticalLayout implements View {
 
         Grid grid = new Grid(container);
 
+        grid.setSizeFull();
+
         addComponents(label, grid);
+
+        setExpandRatio(grid, 1);
 
         setMargin(true);
         setSpacing(true);
