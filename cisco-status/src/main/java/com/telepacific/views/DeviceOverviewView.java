@@ -21,7 +21,7 @@ public class DeviceOverviewView extends VerticalLayout implements View {
 
         Grid grid = new Grid(container);
 
-        grid.setColumnOrder("NAME", "IP ADDRESS");
+        grid.setColumnOrder("name", "ipAddress");
 
         grid.setSizeFull();
 
