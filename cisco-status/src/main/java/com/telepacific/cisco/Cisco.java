@@ -1,4 +1,4 @@
-package com.telepacific.api;
+package com.telepacific.cisco;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
@@ -10,6 +10,7 @@ import com.tailf.cdb.CdbSession;
 import com.tailf.conf.ConfBuf;
 import com.tailf.conf.ConfException;
 import com.tailf.conf.ConfValue;
+import com.telepacific.api.CiscoApi;
 import com.telepacific.domain.JMXAddress;
 import com.telepacific.domain.VLan;
 
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Singleton
-public class Cisco {
+public class Cisco implements CiscoApi {
 
     @Inject
     private Cdb cdb;
@@ -28,6 +29,7 @@ public class Cisco {
     }
 
 
+    @Override
     public List<String> availableDevices() {
 
         CdbSession cdbSession = null;
@@ -61,7 +63,8 @@ public class Cisco {
         }
     }
 
-    public List<VLan> getAllKnownVLans() throws ConfException, IOException {
+    @Override
+    public List<VLan> getAllKnownVLans() {
         List<VLan> vlans = new ArrayList<>();
 
         CdbSession cdbSession = null;
@@ -89,13 +92,20 @@ public class Cisco {
             }
 
             return vlans;
+        } catch (IOException | ConfException e) {
+            throw new RuntimeException(e);
         } finally {
             if(cdbSession != null){
-                cdbSession.endSession();
+                try {
+                    cdbSession.endSession();
+                } catch (ConfException | IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
+    @Override
     public List<String> availableInterfaces(String device) {
         return ImmutableList.of("jmx-addresses");
     }

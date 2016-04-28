@@ -2,36 +2,27 @@ package com.telepacific.views;
 
 import com.google.inject.Inject;
 
-import com.telepacific.data.VLanContainer;
+import com.telepacific.api.Cisco;
+import com.telepacific.domain.VLan;
 import com.vaadin.guice.annotation.GuiceView;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
+
+import java.util.Collection;
 
 @GuiceView(name = "")
-public class DeviceOverviewView extends VerticalLayout implements View {
+public class DeviceOverviewView extends GridViewBase<VLan> {
 
     @Inject
-    public DeviceOverviewView(VLanContainer container) {
+    private Cisco cisco;
 
-        Label label = new Label("all available VLans");
-
-        Grid grid = new Grid(container);
-
+    public DeviceOverviewView() {
+        super(VLan.class, "all available VLans");
         grid.setColumnOrder("name", "ipAddress");
+    }
 
-        grid.setSizeFull();
-
-        addComponents(label, grid);
-
-        setExpandRatio(grid, 1);
-
-        setMargin(true);
-        setSpacing(true);
-        setSizeFull();
+    @Override
+    protected Collection<VLan> getBeans() {
+        return cisco.getAllKnownVLans();
     }
 
     @Override

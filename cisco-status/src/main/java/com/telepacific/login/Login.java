@@ -16,7 +16,7 @@ import com.vaadin.server.VaadinSession;
 import javax.persistence.EntityManager;
 
 @UIScope
-public class LoginApiImpl implements LoginApi {
+public class Login implements LoginApi {
 
     @Inject
     private UIEventBus uiEventBus;
