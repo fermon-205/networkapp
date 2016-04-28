@@ -18,7 +18,7 @@ public class Logo extends Image {
                              @Override
                              public void click(MouseEvents.ClickEvent e) {
                                  deviceSelector.select(null);
-                                 interfaceSelector.select(null);
+                                 interfaceSelector.select("");
                                  UI.getCurrent().getNavigator().navigateTo("");
                              }
                          }
