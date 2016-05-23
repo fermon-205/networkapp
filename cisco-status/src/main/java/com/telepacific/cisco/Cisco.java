@@ -4,13 +4,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import com.tailf.cdb.Cdb;
 import com.tailf.cdb.CdbDBType;
 import com.tailf.cdb.CdbSession;
 import com.tailf.conf.ConfBuf;
 import com.tailf.conf.ConfException;
 import com.tailf.conf.ConfValue;
 import com.telepacific.api.CiscoApi;
+import com.telepacific.cdi.CdbProvider;
 import com.telepacific.domain.JMXAddress;
 import com.telepacific.domain.VLan;
 
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Cisco implements CiscoApi {
 
     @Inject
-    private Cdb cdb;
+    private CdbProvider cdbProvider;
 
     public Cisco() {
     }
@@ -35,7 +35,7 @@ public class Cisco implements CiscoApi {
         CdbSession cdbSession = null;
 
         try {
-            cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
+            cdbSession = cdbProvider.get().startSession(CdbDBType.CDB_RUNNING);
 
             final int numberOfInstances = cdbSession.getNumberOfInstances("/devices/device");
 
@@ -70,7 +70,7 @@ public class Cisco implements CiscoApi {
         CdbSession cdbSession = null;
 
         try{
-            cdbSession = cdb.startSession(CdbDBType.CDB_RUNNING);
+            cdbSession = cdbProvider.get().startSession(CdbDBType.CDB_RUNNING);
 
             int numberOfInstances = cdbSession.getNumberOfInstances("/devices/device");
 
